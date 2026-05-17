@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helper Functions ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- ENTITY VALIDATIONS ---
+
+    function isValidPackage(data) {
+      return data.title is string && data.title.size() <= 200 &&
+             data.price is number && data.price >= 0 &&
+             data.duration is string &&
+             (data.get('isBudget', false) is bool);
+    }
+
+    function isValidBooking(data) {
+      return data.packageId is string &&
+             data.packageName is string &&
+             data.email is string && data.email.size() <= 200 &&
+             data.totalAmount is number && data.totalAmount >= 0 &&
+             data.userId is string &&
+             data.userId == (request.auth != null ? request.auth.uid : 'guest') &&
+             (data.get('status', 'pending') in ['pending', 'confirmed', 'cancelled']);
+    }
+
+    function isValidReview(data) {
+      return data.userName is string && data.userName.size() <= 100 &&
+             data.rating is number && data.rating >= 1 && data.rating <= 5 &&
+             data.comment is string && data.comment.size() <= 1000;
+    }
+
+    function isValidBlog(data) {
+      return data.title is string && data.title.size() <= 200 &&
+             data.content is string &&
+             data.author is string;
+    }
+
+    // --- COLLECTION RULES ---
+
+    match /packages/{packageId} {
+      allow read: if true; // Publicly viewable
+      allow write: if false; // Only via admin/manual (not implemented client-side for users)
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if isSignedIn() && isValidBooking(incoming());
+      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid || resource.data.email == request.auth.token.email);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidReview(incoming());
+    }
+
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

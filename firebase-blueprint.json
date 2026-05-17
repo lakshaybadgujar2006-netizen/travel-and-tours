@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "Package": {
+      "title": "Tour Package",
+      "description": "A travel package offered by Travel & Tours",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "duration": { "type": "string" },
+        "destinations": { "type": "array", "items": { "type": "string" } },
+        "imageUrl": { "type": "string" },
+        "isBudget": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        }
+      },
+      "required": ["title", "price", "duration"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "A user's travel booking",
+      "type": "object",
+      "properties": {
+        "packageId": { "type": "string" },
+        "packageName": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+        "totalAmount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["packageId", "email", "totalAmount", "userId"]
+    },
+    "Review": {
+      "title": "Customer Review",
+      "description": "Feedback from travelers",
+      "type": "object",
+      "properties": {
+        "userName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "packageId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "Travel guides and articles",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "author": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "packages": {
+      "schema": "Package",
+      "description": "Collection of tour packages"
+    },
+    "bookings": {
+      "schema": "Booking",
+      "description": "User bookings"
+    },
+    "reviews": {
+      "schema": "Review",
+      "description": "Customer reviews"
+    },
+    "blogs": {
+      "schema": "BlogPost",
+      "description": "Travel blogs and guides"
+    }
+  }
+}
