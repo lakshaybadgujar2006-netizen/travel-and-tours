@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Compass, Menu, X, Instagram, Facebook, Phone as WhatsApp, LogIn, LogOut, User as UserIcon } from 'lucide-react';
+import { Compass, Menu, X, Instagram, Facebook, Phone as WhatsApp, LogIn, LogOut, User as UserIcon, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { auth } from '../lib/firebase';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, User } from 'firebase/auth';
@@ -19,12 +19,33 @@ export default function Navbar() {
     return () => unsubscribe();
   }, []);
 
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [signInError, setSignInError] = useState<string | null>(null);
+
   const handleSignIn = async () => {
+    setIsSigningIn(true);
+    setSignInError(null);
     const provider = new GoogleAuthProvider();
+    // Force account selection to help debug issues
+    provider.setCustomParameters({ prompt: 'select_account' });
+    
     try {
       await signInWithPopup(auth, provider);
-    } catch (error) {
+      setIsOpen(false);
+    } catch (error: any) {
       console.error("Error signing in: ", error);
+      let message = "Failed to sign in. Please try again.";
+      if (error.code === 'auth/popup-blocked') {
+        message = "Popup was blocked by your browser. Please allow popups for this site.";
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        message = "Sign-in cancelled.";
+      } else if (error.message) {
+        message = error.message;
+      }
+      setSignInError(message);
+      alert(message);
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -122,13 +143,18 @@ export default function Navbar() {
                     </button>
                   </div>
                 ) : (
-                  <button 
-                    onClick={handleSignIn}
-                    className="flex items-center gap-2 px-5 py-2 bg-slate-900 text-white rounded-full hover:bg-accent transition-all duration-300 text-sm font-bold shadow-sm"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    Sign In
-                  </button>
+                    <button 
+                      onClick={handleSignIn}
+                      disabled={isSigningIn}
+                      className="flex items-center gap-2 px-5 py-2 bg-slate-900 text-white rounded-full hover:bg-accent transition-all duration-300 text-sm font-bold shadow-sm disabled:opacity-50"
+                    >
+                      {isSigningIn ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <LogIn className="w-4 h-4" />
+                      )}
+                      {isSigningIn ? 'Signing In...' : 'Sign In'}
+                    </button>
                 )}
               </>
             )}
@@ -184,11 +210,16 @@ export default function Navbar() {
               <button
                 onClick={() => {
                   handleSignIn();
-                  setIsOpen(false);
                 }}
-                className="bg-accent text-white rounded-full py-4 font-bold"
+                disabled={isSigningIn}
+                className="bg-accent text-white rounded-full py-4 font-bold flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                Sign In with Google
+                {isSigningIn ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <LogIn className="w-5 h-5" />
+                )}
+                {isSigningIn ? 'Signing In...' : 'Sign In with Google'}
               </button>
             )}
 

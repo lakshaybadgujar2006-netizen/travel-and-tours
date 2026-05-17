@@ -61,6 +61,26 @@ export default function BookingForm({ pkg }: { pkg: Package }) {
         status: 'pending',
         createdAt: serverTimestamp()
       });
+
+      // Send email notification via backend
+      try {
+        await fetch('/api/bookings/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            packageName: pkg.title,
+            totalAmount: pkg.price,
+            startDate: startDate?.toLocaleDateString(),
+            endDate: endDate?.toLocaleDateString()
+          })
+        });
+      } catch (emailError) {
+        console.error("Failed to send notification email:", emailError);
+        // We don't block the UI for email failures since the booking is already recorded in Firestore
+      }
+
       setSuccess(true);
     } catch (error) {
       handleFirestoreError(error, 'create', path);
