@@ -38,9 +38,9 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Destinations', path: '/destinations' },
     { name: 'Packages', path: '/packages' },
     { name: 'AI Planner', path: '/planner' },
+    { name: 'Custom Tour', path: '/custom-tour' },
     { name: 'Blog', path: '/blog' },
   ];
 
@@ -73,6 +73,26 @@ export default function Navbar() {
           ))}
           
           <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 pr-4 border-r border-slate-200">
+              <a 
+                href="https://www.instagram.com/budgettrips2025?igsh=MXFhZm8wY3pqbjhqdA==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 text-slate-400 hover:text-accent transition-colors"
+                title="Follow on Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://wa.me/919217807801" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 text-slate-400 hover:text-emerald-500 transition-colors"
+                title="Chat on WhatsApp"
+              >
+                <WhatsApp className="w-5 h-5" />
+              </a>
+            </div>
             {!loading && (
               <>
                 {user ? (
@@ -171,6 +191,27 @@ export default function Navbar() {
                 Sign In with Google
               </button>
             )}
+
+            <div className="flex items-center justify-center gap-6 pt-6 border-t border-slate-100">
+              <a 
+                href="https://www.instagram.com/budgettrips2025?igsh=MXFhZm8wY3pqbjhqdA==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 text-slate-400 hover:text-accent transition-colors"
+              >
+                <Instagram className="w-6 h-6" />
+                <span className="text-[10px] font-bold uppercase tracking-widest">Instagram</span>
+              </a>
+              <a 
+                href="https://wa.me/919217807801" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 text-slate-400 hover:text-emerald-500 transition-colors"
+              >
+                <WhatsApp className="w-6 h-6" />
+                <span className="text-[10px] font-bold uppercase tracking-widest">WhatsApp</span>
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

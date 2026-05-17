@@ -4,7 +4,8 @@ import ForYou from '../components/ForYou';
 import PackageGrid from '../components/PackageGrid';
 import AIPlanner from '../components/AIPlanner';
 import { motion } from 'motion/react';
-import { Camera, Map, Star, Users, ShieldCheck, Headset, Sparkles, CreditCard, Smartphone, Wallet, QrCode, Phone as WhatsApp } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Camera, Map, Star, Users, ShieldCheck, Headset, Sparkles, CreditCard, Smartphone, Wallet, QrCode, Phone as WhatsApp, ArrowRight } from 'lucide-react';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -151,6 +152,29 @@ export default function Home() {
       <section id="planner" className="py-24 px-6 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto">
           <AIPlanner />
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-20 text-center space-y-8"
+          >
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-4">Beyond AI Planning</span>
+              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">Need a fully <span className="text-accent italic">Tailor-Made</span> experience?</h3>
+              <p className="text-slate-500 mt-4 max-w-2xl font-medium">
+                Our travel designers can curate every detail of your journey, from heritage stays to exclusive local experiences that aren't on any map.
+              </p>
+            </div>
+
+            <Link 
+              to="/custom-tour" 
+              className="inline-flex items-center gap-4 px-12 py-6 bg-slate-900 text-white rounded-[2.5rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl hover:bg-accent transition-all hover:scale-105 active:scale-95 group"
+            >
+              Book a Custom Tour
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -212,7 +236,7 @@ export default function Home() {
                     <Headset className="w-6 h-6" />
                   </div>
                   <h4 className="font-bold text-slate-900">24/7 Live Support</h4>
-                  <p className="text-sm text-slate-500">Our team is always a call or WhatsApp away, even during your journey.</p>
+                  <p className="text-sm text-slate-500">Our team is always a call, WhatsApp, or Instagram DM away, even during your journey.</p>
                 </div>
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
@@ -252,115 +276,176 @@ export default function Home() {
       </section>
 
       {/* Scan & Pay Section */}
-      <section className="py-24 px-6 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section className="py-32 px-6 bg-[#f8fafc] relative overflow-hidden">
+        {/* Abstract background elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2" />
+        
+        <div className="max-w-7xl mx-auto relative">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             {/* Left Content */}
-            <div className="space-y-8">
-              <div className="w-16 h-1 bg-emerald-500 mb-8" />
-              <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight">
-                Scan & <span className="text-emerald-500 italic">Pay</span> <br /> Anywhere
-              </h2>
-              <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
-                Quick, secure, and hassle-free payments through any UPI app. Simply scan the QR code to proceed with your booking or payment.
-              </p>
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-10"
+            >
+              <div>
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: 64 }}
+                  className="h-1.5 bg-emerald-500 mb-8 rounded-full" 
+                />
+                <h2 className="text-5xl md:text-7xl font-black text-slate-900 leading-[1.05] tracking-tight mb-6">
+                  Ready to <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600 italic">Secure Your Trip?</span>
+                </h2>
+                <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
+                  Instant, secure bookings via UPI. Pay with your preferred app and get immediate confirmation for your next adventure.
+                </p>
+              </div>
               
-              <div className="pt-8">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-6 block">Direct Pay via UPI Apps</span>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="space-y-6">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] block">One-Tap Payment Apps</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     { 
                       name: 'Paytm', 
                       img: 'https://cdn.worldvectorlogo.com/logos/paytm-1.svg',
-                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR'
+                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR',
+                      accent: 'hover:border-blue-400 hover:bg-blue-50/50',
+                      description: 'Fast & Secure'
                     },
                     { 
-                      name: 'GPay', 
+                      name: 'Google Pay', 
                       img: 'https://www.gstatic.com/lamda/images/google_pay_logo_v2.png',
-                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR'
+                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR',
+                      accent: 'hover:border-slate-400 hover:bg-slate-50',
+                      description: 'Trusted by Millions'
                     },
                     { 
                       name: 'PhonePe', 
                       img: 'https://cdn.worldvectorlogo.com/logos/phonepe-1.svg',
-                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR'
+                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR',
+                      accent: 'hover:border-purple-400 hover:bg-purple-50/50',
+                      description: 'Simple & Quick'
                     },
                     { 
-                      name: 'Any UPI', 
+                      name: 'BHIM / Any UPI', 
                       icon: <Smartphone className="w-5 h-5 text-emerald-500" />,
-                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR'
+                      link: 'upi://pay?pa=8295987874@ptyes&pn=Travel%20and%20Tours&cu=INR',
+                      accent: 'hover:border-emerald-400 hover:bg-emerald-50/50',
+                      description: 'Universal Access'
                     }
-                  ].map((app) => (
-                    <a 
+                  ].map((app, idx) => (
+                    <motion.a 
                       key={app.name} 
                       href={app.link}
-                      className="flex flex-col items-center gap-3 p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all hover:shadow-md hover:-translate-y-1 active:scale-95 group"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className={`flex items-center gap-4 p-5 bg-white border border-slate-100 rounded-[1.5rem] shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 active:scale-[0.98] group ${app.accent}`}
                     >
-                      <div className="w-10 h-10 flex items-center justify-center">
+                      <div className="w-12 h-12 flex items-center justify-center shrink-0 bg-slate-50 rounded-xl group-hover:bg-white transition-colors">
                         {app.img ? (
-                          <img src={app.img} alt={app.name} className="w-full h-full object-contain" />
+                          <img src={app.img} alt={app.name} className="w-8 h-8 object-contain" />
                         ) : (
                           app.icon
                         )}
                       </div>
-                      <span className="text-[10px] font-black text-slate-600 uppercase tracking-tighter text-center">{app.name}</span>
-                    </a>
+                      <div className="flex flex-col text-left">
+                        <span className="text-sm font-black text-slate-900 uppercase tracking-tight">{app.name}</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{app.description}</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 ml-auto text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
+                    </motion.a>
                   ))}
                 </div>
 
-                <div className="mt-10 p-6 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
-                    <WhatsApp className="w-5 h-5 text-emerald-500" />
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="p-6 bg-white rounded-3xl border border-emerald-100 flex items-start gap-5 shadow-sm border-l-4 border-l-emerald-500"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0">
+                    <WhatsApp className="w-6 h-6 text-emerald-500" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-900 mb-1">Booking Confirmation</h4>
-                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                      After successful payment, please <span className="font-bold text-emerald-600">share a screenshot on WhatsApp</span> for instant booking confirmation and receipt.
+                    <h4 className="text-base font-bold text-slate-900 mb-1">Confirm Your Adventure</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                      After payment, <span className="font-bold text-emerald-600 underline underline-offset-4 decoration-emerald-200">send a screenshot to WhatsApp</span>. We'll issue your confirmed itinerary and receipt instantly.
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Card Content */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-slate-900 rounded-[3rem] translate-x-4 translate-y-4" />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative lg:ml-auto"
+            >
+              {/* Floating elements for visual depth */}
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="relative bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100 text-center"
-              >
-                <div className="bg-slate-50 p-8 rounded-[2rem] mb-8 inline-block shadow-inner border border-slate-100/50">
-                  <span className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4 block">Scan & Pay</span>
-                  <img 
-                    src="/src/assets/images/upi_qr_code_1779020373838.png" 
-                    alt="UPI Payment QR Code" 
-                    className="w-56 h-56 rounded-xl object-contain mx-auto"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-                
-                <div className="space-y-6">
-                  <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3 block">Our UPI ID</span>
-                    <div className="bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 font-mono text-xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-4 group">
-                      <span>8295987874@ptyes</span>
-                      <button 
-                        onClick={() => navigator.clipboard.writeText('8295987874@ptyes')}
-                        className="p-2 hover:bg-white rounded-lg transition-colors text-slate-400 hover:text-emerald-500"
-                        title="Copy UPI ID"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                      </button>
+                animate={{ y: [0, -10, 0] }} 
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-12 -right-12 w-24 h-24 bg-accent/10 rounded-full blur-2xl z-0" 
+              />
+              <motion.div 
+                animate={{ y: [0, 10, 0] }} 
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-12 -left-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl z-0" 
+              />
+
+              <div className="relative bg-white p-2 rounded-[3.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.12)] border border-slate-100">
+                <div className="bg-slate-900 text-white p-12 rounded-[3rem] text-center space-y-10">
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em] block">Official Payment Gateway</span>
+                    <h3 className="text-3xl font-black tracking-tight">Scan to Pay</h3>
+                  </div>
+
+                  <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl relative group">
+                    <div className="absolute inset-0 bg-emerald-500/5 rounded-[2.5rem] scale-0 group-hover:scale-100 transition-transform duration-500" />
+                    <img 
+                      src="/src/assets/images/upi_qr_code_v2_1779023664835.png" 
+                      alt="UPI Payment QR Code" 
+                      className="w-64 h-64 rounded-2xl object-contain mx-auto relative z-10"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="mt-8 flex items-center justify-center gap-3 text-slate-400">
+                      <QrCode className="w-5 h-5" />
+                      <span className="text-[10px] font-bold uppercase tracking-widest">Secure UPI Transaction</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-center gap-2 text-emerald-500 text-sm font-bold">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    Scan to Pay Securely
+                  <div className="pt-4 space-y-6">
+                    <div className="space-y-3">
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] block">Verified UPI ID</span>
+                      <div className="bg-white/5 border border-white/10 px-6 py-5 rounded-2xl flex items-center justify-between group/id hover:bg-white/10 transition-all cursor-pointer"
+                           onClick={() => {
+                             navigator.clipboard.writeText('8295987874@ptyes');
+                           }}>
+                        <span className="font-mono text-xl font-bold text-emerald-400 tracking-tight">8295987874@ptyes</span>
+                        <div className="p-2.5 bg-white/10 rounded-xl text-white group-hover/id:bg-emerald-500 transition-all">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 py-4 border-t border-white/5">
+                      <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                      <span className="text-xs font-bold text-slate-400">NPCI Verified Secure Payment</span>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

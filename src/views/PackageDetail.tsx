@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { APIProvider, Map, AdvancedMarker, Pin } from '@vis.gl/react-google-maps';
 import { motion } from 'motion/react';
-import { ChevronLeft, Star, Clock, MapPin, CheckCircle, Phone as WhatsApp, ArrowRight } from 'lucide-react';
+import { ChevronLeft, Star, Clock, MapPin, CheckCircle, Phone as WhatsApp, ArrowRight, Instagram } from 'lucide-react';
 import BookingForm from '../components/BookingForm';
 import { DOMESTIC_PACKAGES } from '../constants';
 
@@ -108,21 +108,43 @@ export default function PackageDetail() {
            animate={{ opacity: 1, x: 0 }}
            className="lg:col-span-1"
         >
-          <div className="sticky top-32 space-y-8">
-            <BookingForm pkg={pkg as any} />
-            <div className="bg-emerald-500 rounded-[1.5rem] p-6 text-white flex items-center justify-between group cursor-pointer hover:bg-emerald-600 transition-all">
-               <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                     <WhatsApp className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h5 className="font-bold text-sm">Need Help?</h5>
-                    <p className="text-[10px] uppercase font-bold opacity-75">Chat with us</p>
-                  </div>
-               </div>
-               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <div className="sticky top-32 space-y-4">
+              <BookingForm pkg={pkg as any} />
+              <a 
+                href="https://wa.me/919217807801" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-emerald-500 rounded-[1.5rem] p-6 text-white flex items-center justify-between group cursor-pointer hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20"
+              >
+                <div className="flex items-center gap-4">
+                   <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                      <WhatsApp className="w-6 h-6" />
+                   </div>
+                   <div>
+                     <h5 className="font-bold text-sm">WhatsApp Support</h5>
+                     <p className="text-[10px] uppercase font-bold opacity-75">Chat with us</p>
+                   </div>
+                </div>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a 
+                href="https://www.instagram.com/budgettrips2025?igsh=MXFhZm8wY3pqbjhqdA==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-accent rounded-[1.5rem] p-6 text-white flex items-center justify-between group cursor-pointer hover:bg-slate-900 transition-all shadow-lg shadow-accent/20"
+              >
+                <div className="flex items-center gap-4">
+                   <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                      <Instagram className="w-6 h-6" />
+                   </div>
+                   <div>
+                     <h5 className="font-bold text-sm">Instagram Help</h5>
+                     <p className="text-[10px] uppercase font-bold opacity-75">Follow & DM us</p>
+                   </div>
+                </div>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
-          </div>
         </motion.div>
       </div>
     </div>

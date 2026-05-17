@@ -54,7 +54,21 @@ service cloud.firestore {
              data.author is string;
     }
 
+    function isValidCustomRequest(data) {
+      return data.name is string && data.name.size() <= 200 &&
+             data.email is string && data.email.size() <= 200 &&
+             data.destination is string && data.destination.size() <= 200 &&
+             data.requirements is string && data.requirements.size() <= 5000 &&
+             (data.get('status', 'new') in ['new', 'contacted', 'closed']);
+    }
+
     // --- COLLECTION RULES ---
+
+    match /custom_requests/{requestId} {
+      allow create: if isValidCustomRequest(incoming());
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
 
     match /packages/{packageId} {
       allow read: if true; // Publicly viewable

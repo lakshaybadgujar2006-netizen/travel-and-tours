@@ -66,6 +66,26 @@
         "imageUrl": { "type": "string" },
         "publishedAt": { "type": "string", "format": "date-time" }
       }
+    },
+    "CustomRequest": {
+      "title": "Custom Tour Request",
+      "description": "User's specific requirements for a tailor-made tour",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "destination": { "type": "string" },
+        "startDate": { "type": "string" },
+        "duration": { "type": "string" },
+        "travelers": { "type": "string" },
+        "budget": { "type": "string" },
+        "requirements": { "type": "string" },
+        "status": { "type": "string", "enum": ["new", "contacted", "closed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "destination", "requirements"]
     }
   },
   "firestore": {
@@ -84,6 +104,10 @@
     "blogs": {
       "schema": "BlogPost",
       "description": "Travel blogs and guides"
+    },
+    "custom_requests": {
+      "schema": "CustomRequest",
+      "description": "Tailor-made tour requests"
     }
   }
 }

@@ -16,9 +16,13 @@ export default function Footer() {
               We make domestic travel affordable and aspirational. Explore local gems with experts who care about your budget and your experience.
             </p>
             <div className="flex gap-4">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center hover:bg-accent hover:border-accent hover:text-white transition-all">
-                  <Icon className="w-5 h-5" />
+              {[
+                { Icon: Instagram, href: 'https://www.instagram.com/budgettrips2025?igsh=MXFhZm8wY3pqbjhqdA==' },
+                { Icon: Facebook, href: 'https://facebook.com' },
+                { Icon: Twitter, href: 'https://twitter.com' }
+              ].map((social, i) => (
+                <a key={i} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center hover:bg-accent hover:border-accent hover:text-white transition-all">
+                  <social.Icon className="w-5 h-5" />
                 </a>
               ))}
             </div>

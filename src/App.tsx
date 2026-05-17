@@ -5,6 +5,7 @@ import Home from './views/Home';
 import Blog from './views/Blog';
 import PackageDetail from './views/PackageDetail';
 import ItineraryBuilder from './views/ItineraryBuilder';
+import CustomTour from './views/CustomTour';
 import Footer from './components/Footer';
 import WhatsAppChat from './components/WhatsAppChat';
 import PackageGrid from './components/PackageGrid';
@@ -49,6 +50,7 @@ export default function App() {
                 </PageWrapper>
               } />
               <Route path="/planner" element={<PageWrapper><ItineraryBuilder /></PageWrapper>} />
+              <Route path="/custom-tour" element={<PageWrapper><CustomTour /></PageWrapper>} />
               <Route path="/profile" element={<PageWrapper><Profile /></PageWrapper>} />
               <Route path="/bookings" element={<PageWrapper><Profile /></PageWrapper>} />
               {/* Fallback routes */}
